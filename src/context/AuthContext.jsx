@@ -3,7 +3,9 @@ import axios from 'axios';
 
 const AuthContext = createContext(null);
 
-const API = axios.create({ baseURL: '/api' });
+const API = axios.create({
+  baseURL: "https://trade-now-backend.vercel.app/api",
+});
 
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
