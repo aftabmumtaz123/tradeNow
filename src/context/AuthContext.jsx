@@ -1,11 +1,9 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const AuthContext = createContext(null);
 
-const API = axios.create({
-  baseURL: "https://trade-now-backend.vercel.app/api",
-});
+const API = axios.create({ baseURL: '/api' });
 
 API.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
@@ -18,11 +16,21 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [settings, setSettings] = useState(null);
 
+  const refreshSettings = useCallback(async () => {
+    try {
+      const { data } = await API.get('/settings/public');
+      setSettings(data.settings || null);
+      return data.settings;
+    } catch (e) {
+      console.error('Failed to load settings', e);
+      return null;
+    }
+  }, []);
+
   useEffect(() => {
     const init = async () => {
       try {
-        const { data: s } = await API.get('/settings/public');
-        setSettings(s.settings);
+        await refreshSettings();
         const token = localStorage.getItem('token');
         if (token) {
           const { data } = await API.get('/auth/me');
@@ -35,12 +43,13 @@ export function AuthProvider({ children }) {
       }
     };
     init();
-  }, []);
+  }, [refreshSettings]);
 
   const login = async (email, password) => {
     const { data } = await API.post('/auth/login', { email, password });
     localStorage.setItem('token', data.token);
     setUser(data.user);
+    await refreshSettings();
     return data;
   };
 
@@ -48,6 +57,7 @@ export function AuthProvider({ children }) {
     const { data } = await API.post('/auth/register', form);
     localStorage.setItem('token', data.token);
     setUser(data.user);
+    await refreshSettings();
     return data;
   };
 
@@ -62,7 +72,19 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, settings, login, register, logout, refreshUser, API }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        settings,
+        login,
+        register,
+        logout,
+        refreshUser,
+        refreshSettings,
+        API,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

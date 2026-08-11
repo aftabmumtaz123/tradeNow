@@ -12,7 +12,7 @@ export default function Withdraw() {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
 
-  const minWithdraw = settings?.minWithdrawal || 500;
+  const minWithdraw = settings?.minWithdrawal || 120;
 
   const loadHistory = () => {
     API.get('/withdrawals/my').then((r) => setHistory(r.data.withdrawals || [])).catch(() => {});
@@ -58,7 +58,7 @@ export default function Withdraw() {
 
   const statusColor = (s) =>
     s === 'pending' ? 'text-yellow-400 bg-yellow-500/15' :
-    s === 'approved' || s === 'completed' ? 'text-green-400 bg-green-500/15' :
+    s === 'paid' || s === 'approved' || s === 'completed' ? 'text-green-400 bg-green-500/15' :
     'text-red-400 bg-red-500/15';
 
   return (

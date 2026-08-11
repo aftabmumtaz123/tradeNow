@@ -11,12 +11,15 @@ export default function Landing() {
       <header className="fixed top-0 inset-x-0 z-50 bg-[#050505]/80 backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-              <TrendingUp className="w-5 h-5 text-black" />
-            </div>
+            {settings?.siteLogo ? (
+              <img src={settings.siteLogo} alt="logo" className="w-8 h-8 rounded-lg object-cover" />
+            ) : (
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+                <TrendingUp className="w-5 h-5 text-black" />
+              </div>
+            )}
             <span className="font-bold text-lg tracking-tight">
-              <span className="text-green-400">AL ZAHRA</span>{' '}
-              <span className="text-white">TRADE</span>
+              {settings?.siteName || 'AL ZAHRA TRADE'}
             </span>
           </Link>
 
@@ -56,10 +59,8 @@ export default function Landing() {
             <p className="text-green-400 text-sm font-semibold tracking-widest uppercase mb-4">
               Simple. Clear. Built for Growth.
             </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6">
-              Invest with<br />
-              <span className="text-white">clarity and</span><br />
-              <span className="text-white">confidence.</span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6 whitespace-pre-line">
+              {settings?.landingHeadline || 'Invest with\nclarity and\nconfidence.'}
             </h1>
             <p className="text-gray-400 text-lg max-w-lg mb-8 leading-relaxed">
               {settings?.landingSubheadline ||

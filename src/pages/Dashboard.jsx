@@ -3,7 +3,8 @@ import { Wallet, TrendingUp, Users, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, settings } = useAuth();
+  const banners = (settings?.banners || []).filter(b => b.placement === 'dashboard' || b.placement === 'both');
 
   return (
     <div className="space-y-6">
@@ -38,6 +39,29 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+      
+      {/* Banners from admin settings */}
+      {banners.length > 0 && (
+        <div className="space-y-3">
+          {banners.map((b, i) => (
+            <a
+              key={i}
+              href={b.link || '#'}
+              className="block glass-morph rounded-2xl overflow-hidden"
+            >
+              {b.image ? (
+                <img src={b.image} alt={b.title || 'Banner'} className="w-full max-h-40 object-cover" />
+              ) : (
+                <div className="p-5">
+                  <div className="font-semibold">{b.title}</div>
+                  {b.subtitle && <div className="text-sm text-muted mt-1">{b.subtitle}</div>}
+                </div>
+              )}
+            </a>
+          ))}
+        </div>
+      )}
 
       {/* Stats */}
       <div className="grid sm:grid-cols-3 gap-4">

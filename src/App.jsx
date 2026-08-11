@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -18,6 +19,7 @@ import AdminDeposits from './pages/admin/AdminDeposits';
 import AdminPlans from './pages/admin/AdminPlans';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminSettings from './pages/admin/AdminSettings';
+import AdminWithdrawals from './pages/admin/AdminWithdrawals';
 
 function PrivateRoute({ children, adminOnly = false }) {
   const { user, loading } = useAuth();
@@ -29,6 +31,7 @@ function PrivateRoute({ children, adminOnly = false }) {
 
 export default function App() {
   return (
+    <ThemeProvider>
     <AuthProvider>
       <BrowserRouter>
         <Toaster position="top-right" toastOptions={{ style: { background: '#111', color: '#fff', border: '1px solid #22c55e33' } }} />
@@ -52,6 +55,7 @@ export default function App() {
           <Route path="/admin" element={<PrivateRoute adminOnly><AdminLayout /></PrivateRoute>}>
             <Route index element={<AdminDashboard />} />
             <Route path="deposits" element={<AdminDeposits />} />
+            <Route path="withdrawals" element={<AdminWithdrawals />} />
             <Route path="plans" element={<AdminPlans />} />
             <Route path="users" element={<AdminUsers />} />
             <Route path="settings" element={<AdminSettings />} />
@@ -61,5 +65,6 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+    </ThemeProvider>
   );
 }

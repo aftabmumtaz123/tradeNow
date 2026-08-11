@@ -1,8 +1,9 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import { 
   LayoutDashboard, Wallet, ArrowDownToLine, ArrowUpFromLine, 
-  Users, Gift, History, LogOut, Menu, X, TrendingUp 
+  Users, Gift, History, LogOut, Menu, X, TrendingUp, Sun, Moon 
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -17,6 +18,7 @@ const navItems = [
 
 export default function DashboardLayout() {
   const { user, logout, settings } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -40,11 +42,15 @@ export default function DashboardLayout() {
         flex flex-col
       `}>
         <div className="p-4 flex items-center gap-2 border-b border-green-900/30">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
-            <TrendingUp className="w-5 h-5 text-black" />
-          </div>
+          {settings?.siteLogo ? (
+            <img src={settings.siteLogo} alt="logo" className="w-8 h-8 rounded-lg object-cover" />
+          ) : (
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-400 to-green-600 flex items-center justify-center">
+              <TrendingUp className="w-5 h-5 text-black" />
+            </div>
+          )}
           <span className="font-bold text-lg tracking-tight">
-            <span className="text-green-400">AL ZAHRA</span> <span className="text-white">TRADE</span>
+            {settings?.siteName || 'AL ZAHRA TRADE'}
           </span>
         </div>
 
@@ -91,6 +97,9 @@ export default function DashboardLayout() {
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <button onClick={toggleTheme} className="p-2 rounded-xl hover:bg-white/5" title="Toggle theme">
+              {theme === 'dark' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+            </button>
             <div className="text-right hidden sm:block">
               <div className="text-sm font-medium">{user?.username}</div>
               <div className="text-xs text-green-400">Verified member</div>
