@@ -1,14 +1,17 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
+import config from '../config';
 
 const AuthContext = createContext(null);
 
-const API = axios.create({ baseURL: '/api' });
+const API = axios.create({
+  baseURL: config.apiUrl,
+});
 
-API.interceptors.request.use((config) => {
+API.interceptors.request.use((cfg) => {
   const token = localStorage.getItem('token');
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-  return config;
+  if (token) cfg.headers.Authorization = `Bearer ${token}`;
+  return cfg;
 });
 
 export function AuthProvider({ children }) {
@@ -83,6 +86,7 @@ export function AuthProvider({ children }) {
         refreshUser,
         refreshSettings,
         API,
+        config,
       }}
     >
       {children}

@@ -12,7 +12,7 @@ export default function Withdraw() {
   const [loading, setLoading] = useState(false);
   const [history, setHistory] = useState([]);
 
-  const minWithdraw = settings?.minWithdrawal || 120;
+  const minWithdraw = settings?.minWithdrawal || 500;
 
   const loadHistory = () => {
     API.get('/withdrawals/my').then((r) => setHistory(r.data.withdrawals || [])).catch(() => {});

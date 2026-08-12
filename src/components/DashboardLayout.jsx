@@ -50,7 +50,7 @@ export default function DashboardLayout() {
             </div>
           )}
           <span className="font-bold text-lg tracking-tight">
-            {settings?.siteName || 'AL ZAHRA TRADE'}
+            {settings?.siteName || 'A.U.S'}
           </span>
         </div>
 
@@ -93,7 +93,7 @@ export default function DashboardLayout() {
               <Menu className="w-6 h-6" />
             </button>
             <div className="hidden sm:block text-sm text-gray-400">
-              AL ZAHRA TRADE
+              A.U.S
             </div>
           </div>
           <div className="flex items-center gap-3">
