@@ -19,7 +19,7 @@ export default function Landing() {
               </div>
             )}
             <span className="font-bold text-lg tracking-tight">
-              {settings?.siteName || 'A.U.S'}
+              {settings?.siteName || 'AL ZAHRA TRADE'}
             </span>
           </Link>
 
@@ -155,7 +155,7 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="py-8 px-4 border-t border-white/5 text-center text-sm text-gray-500">
-        © {new Date().getFullYear()} {settings?.siteName || 'A.U.S'}. All rights reserved.
+        © {new Date().getFullYear()} {settings?.siteName || 'AL ZAHRA TRADE'}. All rights reserved.
       </footer>
     </div>
   );

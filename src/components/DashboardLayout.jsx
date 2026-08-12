@@ -50,7 +50,7 @@ export default function DashboardLayout() {
             </div>
           )}
           <span className="font-bold text-lg tracking-tight">
-            {settings?.siteName || 'A.U.S'}
+            {settings?.siteName || 'AL ZAHRA TRADE'}
           </span>
         </div>
 
@@ -58,6 +58,8 @@ export default function DashboardLayout() {
           {navItems.map((item) => (
             <NavLink
               key={item.to}
+
+              
               to={item.to}
               end={item.end}
               onClick={() => setSidebarOpen(false)}
@@ -93,7 +95,7 @@ export default function DashboardLayout() {
               <Menu className="w-6 h-6" />
             </button>
             <div className="hidden sm:block text-sm text-gray-400">
-              A.U.S
+              AL ZAHRA TRADE
             </div>
           </div>
           <div className="flex items-center gap-3">

@@ -43,7 +43,7 @@ export default function AdminLayout() {
           )}
           <div>
             <div className="font-bold text-sm leading-tight">Admin Panel</div>
-            <div className="text-[10px] text-muted">{settings?.siteName || 'A.U.S'}</div>
+            <div className="text-[10px] text-muted">{settings?.siteName || 'AL ZAHRA TRADE'}</div>
           </div>
         </div>
 
